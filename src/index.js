@@ -58,3 +58,11 @@ unsubscribe();
 // console.log(store.getState().entities.bugs);
 const bugOfUser1 = getBugsByUser(1)(store.getState());
 console.log(bugOfUser1);
+store.dispatch((dispatch, getState) => {
+  dispatch({
+    type: "bugsReceived",
+    payload: { bugs: [1, 2, 3, 4, 5, 6] },
+  });
+});
+
+store.dispatch({ type: "error", payload: { message: "An error ocurred." } });
