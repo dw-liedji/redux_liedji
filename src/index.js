@@ -1,12 +1,19 @@
 import configureStore from "./store/configureStore";
 import * as projectActions from "./store/projects";
 import * as bugActions from "./store/bugs";
+import * as userActions from "./store/users";
 import { getUnresolvedBugs } from "./store/bugs";
+import { getBugsByUser } from "./store/bugs";
 
 const store = configureStore();
 const unsubscribe = store.subscribe(() => {
   console.log("Update UI, store changed!", store.getState());
 });
+
+store.dispatch(userActions.userAdded({ name: "Liedji" }));
+store.dispatch(userActions.userAdded({ name: "Wenkack" }));
+store.dispatch(userActions.userAdded({ name: "Brice" }));
+store.dispatch(userActions.userAdded({ name: "Odile" }));
 
 store.dispatch(
   projectActions.projectAdded({ description: "Un simple project 1" })
@@ -41,12 +48,13 @@ store.dispatch(bugActions.bugResolved({ id: 2 }));
 // store.dispatch(bugActions.bugResolved({ id: 3 }));
 // store.dispatch(bugActions.bugResolved({ id: 4 }));
 
-// store.dispatch(bugActions.bugRemoved({ id: 1 }));
-// store.dispatch(bugActions.bugRemoved({ id: 2 }));
-// store.dispatch(bugActions.bugRemoved({ id: 3 }));
-// store.dispatch(bugActions.bugRemoved({ id: 4 }));
+store.dispatch(bugActions.bugAssignedToUser({ id: 1, userId: 1 }));
+store.dispatch(bugActions.bugAssignedToUser({ id: 2, userId: 1 }));
+store.dispatch(bugActions.bugAssignedToUser({ id: 3, userId: 1 }));
+store.dispatch(bugActions.bugAssignedToUser({ id: 4, userId: 3 }));
 
 unsubscribe();
-const x = getUnresolvedBugs(store.getState());
-const y = getUnresolvedBugs(store.getState());
-console.log(x === y);
+
+// console.log(store.getState().entities.bugs);
+const bugOfUser1 = getBugsByUser(1)(store.getState());
+console.log(bugOfUser1);
