@@ -3,8 +3,6 @@ import moment from "moment";
 import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
 
-let lastId = 0;
-
 const slice = createSlice({
   name: "bugs",
   initialState: {
@@ -26,7 +24,7 @@ const slice = createSlice({
     },
     bugAdded: (bugs, action) => {
       // writing regular mutating code here
-      bugs.list.push({ id: ++lastId, description: action.payload.description });
+      bugs.list.push(action.payload);
     },
     bugResolved: (bugs, action) => {
       const index = bugs.list.findIndex((bug) => bug.id === action.payload.id);
@@ -55,7 +53,13 @@ export const {
 export default slice.reducer;
 
 const url = "/bugs";
-
+export const addBug = (bug) =>
+  apiCallBegan({
+    url,
+    method: "post",
+    data: bug,
+    onSuccess: bugAdded.type,
+  });
 export const loadBugs = () => (dispatch, getState) => {
   const { lastFetch } = getState().entities.bugs;
 
