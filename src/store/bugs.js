@@ -41,7 +41,8 @@ const slice = createSlice({
   },
 });
 
-export const {
+// reducing coupling
+const {
   bugAdded,
   bugResolved,
   bugRemoved,
