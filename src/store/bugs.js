@@ -28,7 +28,7 @@ const slice = createSlice({
     },
     bugResolved: (bugs, action) => {
       const index = bugs.list.findIndex((bug) => bug.id === action.payload.id);
-      bugs.list[index].isResolved = true;
+      bugs.list[index].resolved = true;
     },
     bugRemoved: (bugs, action) => {
       const index = bugs.list.findIndex((bug) => bug.id === action.payload.id);
@@ -59,6 +59,14 @@ export const addBug = (bug) =>
     method: "post",
     data: bug,
     onSuccess: bugAdded.type,
+  });
+
+export const resolveBug = (id) =>
+  apiCallBegan({
+    url: url + "/" + id,
+    method: "patch",
+    data: { resolved: true },
+    onSuccess: bugResolved.type,
   });
 export const loadBugs = () => (dispatch, getState) => {
   const { lastFetch } = getState().entities.bugs;
