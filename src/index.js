@@ -5,3 +5,7 @@ const store = configureStore();
 
 // UI Layer
 store.dispatch(loadBugs());
+
+setTimeout((params) => {
+  store.dispatch(loadBugs());
+}, 2000);
