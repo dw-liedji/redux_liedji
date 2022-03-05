@@ -1,6 +1,6 @@
 import configureStore from "./store/configureStore";
 import { loadBugs } from "./store/bugs";
-import { addBug, resolveBug } from "./store/bugs";
+import { addBug, resolveBug, assignBugToUser } from "./store/bugs";
 
 const store = configureStore();
 
@@ -9,5 +9,5 @@ const store = configureStore();
 store.dispatch(loadBugs());
 
 setTimeout(() => {
-  store.dispatch(resolveBug(2));
+  store.dispatch(assignBugToUser(1, 2));
 }, 2000);

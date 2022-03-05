@@ -68,6 +68,14 @@ export const resolveBug = (id) =>
     data: { resolved: true },
     onSuccess: bugResolved.type,
   });
+
+export const assignBugToUser = (bugId, userId) =>
+  apiCallBegan({
+    url: url + "/" + bugId,
+    method: "patch",
+    data: { userId: userId },
+    onSuccess: bugAssignedToUser.type,
+  });
 export const loadBugs = () => (dispatch, getState) => {
   const { lastFetch } = getState().entities.bugs;
 
