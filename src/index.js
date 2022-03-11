@@ -1,13 +1,17 @@
-import configureStore from "./store/configureStore";
-import { loadBugs } from "./store/bugs";
-import { addBug, resolveBug, assignBugToUser } from "./store/bugs";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import configuredStore from "./store/configureStore";
+import { Provider } from "react-redux";
 
-const store = configureStore();
+const store = configuredStore();
 
-// store.dispatch(addBug({ description: "create a second bug by liedji" }));
-// UI Layer
-store.dispatch(loadBugs());
-
-setTimeout(() => {
-  store.dispatch(assignBugToUser(1, 2));
-}, 2000);
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  // <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootElement
+);

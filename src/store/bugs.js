@@ -103,3 +103,4 @@ export const getBugsByUser = (userId) =>
     (state) => state.entities.bugs,
     (bugs) => bugs.list.filter((bug) => bug.userId === userId)
   );
+export const getBugs = (state) => state.entities.bugs.list;
